@@ -20,3 +20,9 @@ About Diffie-Hellman from Wikipedia (src: https://en.wikipedia.org/wiki/Diffie%E
 Traditionally, secure encrypted communication between two parties required that they first exchange keys by some secure physical channel, such as paper key lists transported by a trusted courier. The Diffie–Hellman key exchange method allows two parties that have no prior knowledge of each other to jointly establish a shared secret key over an insecure channel. This key can then be used to encrypt subsequent communications using a symmetric key cipher."
 
 Illustrated with color mixing analogy: https://upload.wikimedia.org/wikipedia/commons/3/35/Diffie-Hellman_Key_Exchange-modified.png
+
+Computerphile does a fantastic job explaining DH without the usage of mathematics based on the above color mixing analogy.
+https://www.youtube.com/watch?v=NmM9HA2MQGI
+
+They also do a mathematics-based version below as well.
+https://www.youtube.com/watch?v=Yjrfm_oRO0w
