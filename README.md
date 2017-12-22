@@ -1,4 +1,4 @@
-# diffie-hellman
+# Diffie-Hellman Key Exchange (Proof of Concept)
 Diffie-Hellman key exchange proof of concept
 
 Setup and Execution:
