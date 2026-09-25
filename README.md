@@ -23,7 +23,7 @@ With Python 3 installed, run:
 python diffiehellman.py
 ```
 
-The original terminal example chooses public values and prompts for private integers. It is preserved as a separate historical proof of concept. Its parameter selection and arithmetic are educational and should not be used in production.
+The terminal example chooses a small prime modulus and a generator, then prompts for two positive private integers with hidden input. It uses modular exponentiation to calculate and display each side of the exchange. The output intentionally reveals the private exponents as part of the walkthrough. These small parameters are for learning and must not be used in production.
 
 ## How the exchange works
 
