@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101629">
+  <title>Diffie–Hellman · Key Exchange Lab</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eaf0ff;background:#0b1020;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#23335b 0%,transparent 38%),radial-gradient(ellipse at 90% 20%,#24304b 0%,transparent 35%),#0b1020}
+    button,input{font:inherit}button{cursor:pointer}a{color:#95c9ff}button:focus-visible,input:focus-visible{outline:3px solid #82ddff;outline-offset:3px}
+    .wrap{max-width:1190px;margin:auto;padding:42px 22px 80px}.eyebrow{color:#7fe5d5;text-transform:uppercase;letter-spacing:.19em;font-size:.75rem;font-weight:800}.hero{max-width:790px;margin-bottom:34px}h1{font-size:clamp(2.4rem,6vw,4.3rem);line-height:1.08;letter-spacing:-.055em;margin:12px 0 15px}.lead{color:#adb9d4;font-size:1.1rem;line-height:1.6;margin:0}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 30px}
+    .btn{border:1px solid #536080;border-radius:12px;background:#26314b;color:#f5f7ff;padding:11px 16px;font-weight:700;transition:transform .15s,background .15s}.btn:hover{transform:translateY(-2px);background:#344360}.btn.primary{background:#68ddcd;color:#0c2630;border-color:#68ddcd}.btn.primary:hover{background:#91eee0}.btn:disabled{cursor:default;opacity:.45;transform:none}
+    .panel{background:#151d32;border:1px solid #35415d;border-radius:22px;box-shadow:0 20px 60px #03071644}.settings{padding:24px;margin-bottom:18px}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.section-head h2,.timeline h2{font-size:1.18rem;margin:0 0 6px}.muted{color:#9ba9c6;font-size:.9rem;line-height:1.5}.settings-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-top:20px}label{display:block;color:#bac6dd;font-size:.86rem;font-weight:650}label span{display:block;margin-bottom:7px}input{width:100%;background:#0c1428;color:#fff;border:1px solid #52607c;border-radius:11px;padding:12px 13px;min-height:46px}input:invalid{border-color:#ffaf92}.hint{margin:14px 0 0;color:#9ba9c6;font-size:.83rem}.error{color:#ffc09d;min-height:1.4em;margin:12px 0 0;font-weight:600}
+    .board{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:16px;align-items:stretch}.actor{padding:24px;position:relative;overflow:hidden}.actor.alice{border-top:3px solid #ffaf88}.actor.bob{border-top:3px solid #8caaff}.actor h2{margin:0 0 20px;font-size:1.5rem}.actor .tag{font-size:.73rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px}.alice .tag{color:#ffaf88}.bob .tag{color:#8caaff}.value{font-size:clamp(1.4rem,3vw,2.25rem);font-weight:800;letter-spacing:-.04em;overflow-wrap:anywhere}.datum{border-top:1px solid #35415d;padding:16px 0}.datum:first-of-type{border:0}.datum small{display:block;color:#a9b7d1;margin-bottom:5px}.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.83rem;color:#9de8dc;overflow-wrap:anywhere;margin-top:6px;line-height:1.5}.secret{color:#ffcf98}.shared{color:#a4f0b5}
+    .channel{padding:24px;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:12px}.channel-icon{font-size:2.5rem}.channel h2{margin:0}.channel p{margin:0;color:#aab8d1;line-height:1.5}.public-values{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.pill{border-radius:999px;padding:7px 11px;background:#273550;color:#cfe7ff;font-size:.88rem;font-weight:700}.pill.private{background:#4f322d;color:#ffd3bd}.exchange{display:grid;gap:12px;margin:12px 0}.packet{border:1px dashed #647695;border-radius:12px;padding:11px;color:#d8e7ff;background:#1c2a43;font-weight:700;opacity:.35;transform:scale(.97);transition:opacity .35s,transform .35s}.packet.visible{opacity:1;transform:scale(1)}
+    .result{margin-top:18px;padding:23px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border-color:#3d685f}.result strong{display:block;font-size:1.15rem}.result p{margin:5px 0 0;color:#aab8d1}.result .key{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:850;color:#a4f0b5;letter-spacing:-.03em}.timeline{margin-top:22px;padding:24px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.step{border:1px solid #37435e;border-radius:14px;padding:16px;background:#10182c;opacity:.48;transition:opacity .25s,border-color .25s,background .25s}.step.active{opacity:1;border-color:#72dbce;background:#1b3440}.step.done{opacity:1}.step .number{color:#79ded1;font-weight:850;font-size:.8rem}.step h3{font-size:1rem;margin:8px 0}.step p{color:#b3c1d9;font-size:.86rem;line-height:1.5;margin:0}.foot{margin:24px 0;color:#aab8d1;line-height:1.6;font-size:.9rem}.foot strong{color:#e7f0ff}
+    @media(max-width:850px){.board{grid-template-columns:1fr 1fr}.channel{grid-column:1/-1;grid-row:2}.bob{grid-column:2;grid-row:1}.settings-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.wrap{padding:28px 15px 60px}.board{display:flex;flex-direction:column}.settings-grid,.steps{grid-template-columns:1fr 1fr}.actor,.channel,.settings,.timeline{padding:18px}.result{align-items:flex-start}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero"><div class="eyebrow">Interactive cryptography lab</div><h1>Make a shared secret<br>in plain sight.</h1><p class="lead">Alice and Bob can agree on a matching number even when everyone sees the messages they exchange. Change the inputs, then walk through the math one step at a time.</p></header>
+    <div class="toolbar"><button class="btn primary" id="next">Next step →</button><button class="btn" id="play">▶ Play all</button><button class="btn" id="reset">↺ Reset</button><button class="btn" id="random">⤨ New example</button></div>
+    <section class="settings panel" aria-labelledby="settings-title"><div class="section-head"><div><h2 id="settings-title">Choose the numbers</h2><div class="muted">The prime and base are public. Alice and Bob keep their exponents private.</div></div><span class="pill">Toy numbers for learning</span></div>
+      <div class="settings-grid">
+        <label><span>Public prime · p</span><input id="p" type="number" min="5" max="997" step="1" value="23"></label>
+        <label><span>Public base · g</span><input id="g" type="number" min="2" max="996" step="1" value="5"></label>
+        <label><span>Alice’s secret · a</span><input id="a" type="number" min="1" max="9999" step="1" value="6"></label>
+        <label><span>Bob’s secret · b</span><input id="b" type="number" min="1" max="9999" step="1" value="15"></label>
+      </div><p class="hint">Try p = 23, g = 5, a = 6, b = 15. “mod” means the remainder after division.</p><p class="error" id="error" role="alert" aria-live="polite"></p>
+    </section>
+    <section class="board" aria-label="Key exchange diagram">
+      <article class="actor alice panel"><div class="tag">Participant 01</div><h2>Alice</h2><div class="datum"><small>Private exponent</small><div class="value secret" id="alice-secret">a = 6</div><div class="formula">Never sent over the channel</div></div><div class="datum"><small>Public value to send</small><div class="value" id="alice-public">A = ?</div><div class="formula" id="alice-formula">A = g^a mod p</div></div><div class="datum"><small>Secret calculated locally</small><div class="value shared" id="alice-key">K = ?</div><div class="formula" id="alice-key-formula">K = B^a mod p</div></div></article>
+      <article class="channel panel"><div class="channel-icon" aria-hidden="true">⇄</div><h2>Public channel</h2><p>Anyone watching can see these numbers and the exchanged values.</p><div class="public-values"><span class="pill" id="public-p">p = 23</span><span class="pill" id="public-g">g = 5</span></div><div class="exchange"><div class="packet" id="packet-a">Alice → Bob · A = ?</div><div class="packet" id="packet-b">Bob → Alice · B = ?</div></div><p>The private exponents stay with Alice and Bob.</p></article>
+      <article class="actor bob panel"><div class="tag">Participant 02</div><h2>Bob</h2><div class="datum"><small>Private exponent</small><div class="value secret" id="bob-secret">b = 15</div><div class="formula">Never sent over the channel</div></div><div class="datum"><small>Public value to send</small><div class="value" id="bob-public">B = ?</div><div class="formula" id="bob-formula">B = g^b mod p</div></div><div class="datum"><small>Secret calculated locally</small><div class="value shared" id="bob-key">K = ?</div><div class="formula" id="bob-key-formula">K = A^b mod p</div></div></article>
+    </section>
+    <section class="result panel" id="result" hidden aria-live="polite"><div><strong>They arrived at the same secret.</strong><p>Both compute g^(ab) mod p without transmitting a or b.</p></div><div class="key" id="final-key"></div></section>
+    <section class="timeline panel"><h2>Follow the exchange</h2><div class="muted" id="status" aria-live="polite">Ready. Choose “Next step” to begin.</div><div class="steps" id="steps">
+      <div class="step"><div class="number">01 · AGREE</div><h3>Public setup</h3><p>They agree on a prime p and base g. Both values are visible to everyone.</p></div>
+      <div class="step"><div class="number">02 · KEEP PRIVATE</div><h3>Pick secrets</h3><p>Alice chooses a; Bob chooses b. Neither sends their secret exponent.</p></div>
+      <div class="step"><div class="number">03 · EXCHANGE</div><h3>Send public values</h3><p>Alice sends A = g^a mod p. Bob sends B = g^b mod p.</p></div>
+      <div class="step"><div class="number">04 · CALCULATE</div><h3>Match the keys</h3><p>Alice uses B^a mod p. Bob uses A^b mod p. The results match.</p></div>
+    </div></section>
+    <p class="foot"><strong>Learning demo:</strong> Small values make the arithmetic visible, but they provide no real security. A real implementation needs a vetted cryptography library, safe group parameters, authentication, and a key derivation function. This exchange establishes shared key material; it does not encrypt a message by itself.</p>
+  </main>
+  <script>
+    const $ = id => document.getElementById(id);
+    const fields = ['p','g','a','b'].map($);
+    const cards = [...document.querySelectorAll('.step')];
+    const primes = [11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97];
+    let step = 0, timer = null, data = null;
+    function prime(n){if(n < 2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true}
+    function modPow(base, exponent, modulus){let result=1n;for(base%=modulus;exponent>0n;exponent>>=1n){if(exponent&1n)result=result*base%modulus;base=base*base%modulus}return result}
+    function validate(){
+      const v=fields.map(f=>Number(f.value));
+      if(fields.some(f=>f.value.trim()==='' )||v.some(n=>!Number.isSafeInteger(n)))throw Error('Enter whole numbers in every field.');
+      const [p,g,a,b]=v;
+      if(p<5||p>997||!prime(p))throw Error('p must be a prime number from 5 to 997.');
+      if(g<2||g>=p)throw Error('g must be at least 2 and less than p.');
+      if(a<1||a>9999||b<1||b>9999)throw Error('Private exponents must be from 1 to 9,999.');
+      const P=BigInt(p),G=BigInt(g),A=modPow(G,BigInt(a),P),B=modPow(G,BigInt(b),P);
+      return {p,g,a,b,A,B,K:modPow(B,BigInt(a),P),other:modPow(A,BigInt(b),P)};
+    }
+    function stop(){if(timer){clearInterval(timer);timer=null} $('play').textContent='▶ Play all'}
+    function render(){
+      $('error').textContent='';
+      try{data=validate()}catch(e){data=null;$('error').textContent=e.message;stop()}
+      $('next').disabled=!data||step===4;$('play').disabled=!data||step===4;
+      cards.forEach((card,i)=>{card.classList.toggle('active',step===i+1);card.classList.toggle('done',step>i+1)});
+      $('status').textContent=!data?'Correct the inputs to continue.':step===0?'Ready. Choose “Next step” to begin.':[
+        'The public values are visible to everyone.',
+        'Alice and Bob choose private exponents independently.',
+        'They exchange A and B over the public channel.',
+        'Both sides calculate the same shared secret.'
+      ][step-1];
+      const v=data;if(!v)return;
+      $('public-p').textContent='p = '+v.p;$('public-g').textContent='g = '+v.g;
+      $('alice-secret').textContent=step>=2?'a = '+v.a:'a = hidden';
+      $('bob-secret').textContent=step>=2?'b = '+v.b:'b = hidden';
+      $('alice-public').textContent=step>=3?'A = '+v.A:'A = ?';
+      $('bob-public').textContent=step>=3?'B = '+v.B:'B = ?';
+      $('alice-formula').textContent=step>=3?`${v.g}^${v.a} mod ${v.p} = ${v.A}`:'A = g^a mod p';
+      $('bob-formula').textContent=step>=3?`${v.g}^${v.b} mod ${v.p} = ${v.B}`:'B = g^b mod p';
+      $('packet-a').textContent=step>=3?'Alice → Bob · A = '+v.A:'Alice → Bob · A = ?';
+      $('packet-b').textContent=step>=3?'Bob → Alice · B = '+v.B:'Bob → Alice · B = ?';
+      $('packet-a').classList.toggle('visible',step>=3);$('packet-b').classList.toggle('visible',step>=3);
+      $('alice-key').textContent=step===4?'K = '+v.K:'K = ?';
+      $('bob-key').textContent=step===4?'K = '+v.other:'K = ?';
+      $('alice-key-formula').textContent=step===4?`${v.B}^${v.a} mod ${v.p} = ${v.K}`:'K = B^a mod p';
+      $('bob-key-formula').textContent=step===4?`${v.A}^${v.b} mod ${v.p} = ${v.other}`:'K = A^b mod p';
+      $('result').hidden=step!==4;$('final-key').textContent='K = '+v.K;
+      if(step===4)stop();
+    }
+    $('next').addEventListener('click',()=>{if(data&&step<4){step++;render()}});
+    $('reset').addEventListener('click',()=>{stop();step=0;render()});
+    $('play').addEventListener('click',()=>{if(timer){stop();return}if(!data)return;if(step===4)step=0;step++;render();if(step<4){timer=setInterval(()=>{step++;render()},1100);$('play').textContent='Ⅱ Pause'}});
+    $('random').addEventListener('click',()=>{stop();const p=primes[Math.floor(Math.random()*primes.length)];$('p').value=p;$('g').value=2+Math.floor(Math.random()*(p-2));$('a').value=2+Math.floor(Math.random()*18);$('b').value=2+Math.floor(Math.random()*18);step=0;render()});
+    fields.forEach(f=>f.addEventListener('input',()=>{stop();step=0;render()}));
+    render();
+  </script>
+</body>
+</html>
