@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#101629" />
+        <meta name="theme-color" content="#006a97" />
         <title>Diffie–Hellman · Key Exchange Lab</title>
         <style>
             :root {
@@ -421,6 +421,66 @@
                     transition: none !important;
                 }
             }
+        
+            /* Barry Lee site palette and display style; layout and behavior are unchanged. */
+            :root {
+                color: #17242d;
+                background: #fff;
+                font-family: "proxima-nova-thin", "Segoe UI", Arial, sans-serif;
+                font-weight: 300;
+            }
+            body { background: #fff; color: #17242d; }
+            a { color: #006a97; }
+            button:focus-visible, input:focus-visible { outline-color: #006a97; }
+            .eyebrow { color: #006a97; }
+            h1, .section-head h2, .timeline h2, .actor h2, .channel h2, .step h3 {
+                font-family: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+                text-transform: uppercase;
+                font-weight: 400;
+                letter-spacing: .005em;
+            }
+            h1 { color: #17242d; letter-spacing: -.025em; }
+            .lead, .muted, .hint, .foot { color: #45515b; }
+            .btn {
+                background: #0086b3;
+                border-color: #006a97;
+                border-radius: 3px;
+                color: #fff;
+            }
+            .btn:hover { background: #006a97; }
+            .btn.primary { background: #006a97; border-color: #006a97; color: #fff; }
+            .btn.primary:hover { background: #0086b3; }
+            .panel {
+                background: #d9d9d9;
+                border-color: #c7c7c7;
+                border-radius: 4px;
+                box-shadow: none;
+            }
+            label { color: #24313a; }
+            input { background: #fff; color: #17242d; border-color: #999; border-radius: 3px; }
+            input:invalid, .error { border-color: #a32a2a; color: #a32a2a; }
+            .actor.alice { border-top-color: #006a97; }
+            .actor.bob { border-top-color: #3baeda; }
+            .alice .tag, .bob .tag, .formula, .shared { color: #006a97; }
+            .secret { color: #205a76; }
+            .datum { border-top-color: #b5bdc3; }
+            .datum small, .step p, .result p { color: #45515b; }
+            .channel { background: #006a97; border-color: #006a97; color: #fff; }
+            .channel h2, .channel p, .channel-icon { color: #fff; }
+            .pill { background: #fff; color: #006a97; }
+            .pill.private { background: #c7eaf6; color: #17242d; }
+            .packet {
+                background: #0086b3;
+                border-color: #a6d9ec;
+                border-radius: 3px;
+                color: #fff;
+            }
+            .result { border-color: #006a97; }
+            .result .key { color: #006a97; }
+            .step { background: #fff; border-color: #b9c2c8; border-radius: 3px; }
+            .step.active { background: #d8f1f9; border-color: #006a97; }
+            .step .number { color: #006a97; }
+            .foot strong { color: #17242d; }
         </style>
     </head>
     <body>
