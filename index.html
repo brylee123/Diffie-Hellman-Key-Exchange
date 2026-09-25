@@ -481,6 +481,23 @@
             .step.active { background: #d8f1f9; border-color: #006a97; }
             .step .number { color: #006a97; }
             .foot strong { color: #17242d; }
+        
+            /* Same locally bundled typefaces used by barrylee.technology. */
+            @font-face {
+                font-family: "proxima-nova-thin";
+                src: url("fonts/Proxima-Nova-Thin.ttf") format("truetype");
+                font-style: normal;
+                font-weight: 300;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: "ostrichsans-bold";
+                src: url("fonts/OstrichSans-Bold.otf") format("opentype");
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+            }
+            h1, .section-head h2, .timeline h2, .actor h2, .channel h2, .step h3 { font-family: "ostrichsans-bold", "Arial Narrow", Impact, sans-serif; }
         </style>
     </head>
     <body>
